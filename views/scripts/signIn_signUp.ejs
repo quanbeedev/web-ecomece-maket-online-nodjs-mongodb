@@ -1,0 +1,82 @@
+//signin
+<script>
+    $(document).on('click','.btnLogin',function(e){
+        e.preventDefault();
+        let username = $('#username').val().trim();
+        let password = $('#password').val().trim();
+        console.log({username,password})
+        if(!username||!password)
+        {
+            alert('Mời bạn nhập đầy đủ thông tin');
+        }else{
+        // if(password){
+        //     var variations = {
+        //     digits: /\d/.test(password),
+        //     lower: /[a-z]/.test(password),
+        //     upper: /[A-Z]/.test(password),
+        //     nonWords: /\W/.test(password),
+        //     }
+
+        //      for (var check in variations) {
+        //          if(variations[check] == false){
+        //             alert("Mật khẩu phải bao gồm chữ số")
+        //          }
+        // }
+        // }
+           
+               $.ajax({
+                url:`/customers/dang-nhap`,
+                method:'POST',
+                data:{username,password},
+                success: resp =>{
+                    
+                    if(!resp.error){
+                        toastr["success"]("Bạn đã dang nhap thành công", "Thành Công");
+                        window.location.href = `/customers/`;
+                    }else{
+                        toastr["error"]("Đăng nhập thất bại mời bạn đăng nhập lại", "Thất Bại");
+                    }
+                }
+
+            })
+        }
+    })
+</script>
+//signup-link
+<%- include('../patials/footer.ejs') %>
+<script>
+    $(document).on('click' ,'.btnSignUp', function(e) {
+        let name = $('#name').val();
+        let username =$('#username').val();
+        let password =$('#password').val();
+        let email = $('#email').val();
+        console.log({name, username, password,email})
+
+        if(!username || !password)
+        {
+            //toastr["Warning"],("Mời Bạn Nhập Đầy Đủ Thông Tin Username Hoặc Password","Cảnh báo ")
+            toastr.error('Mời bạn nhập đầy đủ thông tin', 'Thiếu thông tin');
+        }
+        if(username.length >30){ 
+            toastr.error('Tên đăng nhập không hợp lệ', 'Sai thông tin');
+        } 
+        else{
+            $.ajax({
+                url: '/customers/dang-ky',
+                method: 'POST',
+                data:{ name, username,password,email},
+                success: resp =>{
+                    let a= resp;
+                    console.log(a);
+                    if(!resp.error){
+                    toastr.success("Chúc mừng bạn đã đăng ký thành công","Thanh Cong")
+                    window.location.href =`/customers/dang-nhap`
+                    }else{
+                        toastr.error("Đăng ký thất bại, mời bạn nhập lại thông tin","Thất bại")
+                    }
+
+                }
+            })
+        }
+    })
+</script>

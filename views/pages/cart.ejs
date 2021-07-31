@@ -1,0 +1,320 @@
+<%- include('../patials/header.ejs') -%>
+
+<section class="banner-section" style="background-image: url(/assets/img/banner.png);">
+    <div class="container">
+        <div class="banner-inner text-center">
+            <h2 class="page-title">Your Cart</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="cart-page mt-120 rmt-80 mb-120 rmb-80">
+    <div class="container">
+        <div class="row col-gap-60">
+            <div class="col-xl-8">
+                <div class="cart-total-product rmb-80 b1 br-5 p-50 ">
+                    <h4 class="cart-heading">Shopping Cart</h4>
+                    <div class="cart-title d-none d-md-flex">
+                        <h5 class="product-title">Product</h5>
+                        <h5 class="quantity-title">Quantity</h5>
+                        <h5 class="price-title">Price</h5>
+                        <h5 class="total-title">Total</h5>
+                    </div>                             
+                <div class="cart-items pb-15  PruductAddOrMinus">
+                  <%if(cartArr && cartArr.length >0){%>
+                    <%cartArr.forEach(item =>{%>
+                         
+                        <div class="cart-single-item ">
+                            <button _productID="<%=item.infoProduct._id%>" type="button" class="close btnDeleteCart">
+                                <i class="flaticon-cross"></i>
+                            </button>
+                            <div class="product-img">
+                                <img src="/img/<%=item.infoProduct.avatar%>" alt="Product Image" />
+                            </div>
+                            <h6 class="product-name " id="productName" value="<=item.infoProduct.title>" ><%= item.infoProduct.title %> (1kg)</h6>
+                            <div class="number-input">
+                                <button class="minus" _idProduct="<%=item.infoProduct._id%>"></button></button>
+                                <input class="quantity" min="1" name="quantity" value="<%=item.qty%>" type="number" />
+                                <button class="plus btnPlus" _idProduct="<%=item.infoProduct._id%>"></button>
+                            </div>
+                            <h6 class="product-price priceProduct">                          
+                                        <%=item.total%>
+                            </h6>
+                          
+                        </div>
+                        <%})%>
+                    <%}%>
+                    </div>
+                    <div class="row text-center text-lg-left">
+                        <div class="col-lg-5">
+                            <div class="continue-shopping " >
+                                <button  class="theme-btn no-shadow bg-blue br-5 btnContinueShoping" type="submit" >Continue Shopping</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="update-shopping text-lg-right">
+                                <a href="#" class="theme-btn no-shadow style-two br-10 rmt-30">Update Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="cart-total-price p-50">
+                    <h4 class="cart-heading">Order Summary</h4>
+                
+                    <div class="total-item-wrap infoSumary hihi">
+                        
+                        <div class="abc">
+                            <%if(cartArr){%>
+                            <%cartArr.forEach( item => {%>
+                            <div class="total-item sub-total ">
+                                <span class="title"><%=item.infoProduct.title%></span>
+                                <span class="price"><%=item.total%></span>       
+                            </div>
+                             <%})%>
+                    <%}%>
+                         </div>
+                        
+                   
+                        <!-- <div class="total-item shipping">
+                            <span class="title">Shipping Cost</span>
+                            <span class="price">10</span>
+                        </div> -->
+                        <form action="#" class="d-lg-block">
+                            <h6 class="mb-25 mt-30">Promo Code</h6>
+                            <input class="w-100 br-5" type="text" placeholder="Enter Discount Code" />
+                            <button class="theme-btn no-shadow bg-blue br-5" type="submit">Apply</button>
+                        </form>
+                        <div class="total-item discount">
+                            <span class="title">Discount</span>
+                            <span class="price">0</span>
+                        </div>
+                        <% let ite = 0%>
+                        <%if(cartArr){%>
+                            <%cartArr.forEach(item => {%>
+                               <% ite += item.total%>
+                            <%})%>
+                        <%}%>
+                        <div class="cda"> 
+                            <div class="total-item total sumTotal">
+                                <span class="title mb-0">Total</span>
+                                <span class="price mb-0"><%=ite%></span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                      
+                
+                    <div class="proceed-btn mt-30">
+                        <a  userID = "<%if(infoUser){%><%=infoUser._id%><%}%>" class="theme-btn w-100 text-center br-10 btnCheckOut">Proceed Checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- include('../patials/footer.ejs') -%>
+
+
+<script>
+  $(document).on('click','.btnCheckOut', function(e){
+        let id = $(this).attr('userID');
+        let productName = document.getElementById('productName');
+
+        console.log({id, productName});
+        if (!id){
+            alert("Ban chua dang nhap, moi ban dang nhap de thanh toan");
+            return window.location.href = '/customers/dang-nhap';
+        }else{
+            $.ajax({
+                url:`/customers/checkout`,
+                method: 'GET',
+                success: resp=> {
+                    if(!resp.error){
+                        return window.location.href = '/customers/checkout';
+                    }
+                }
+            })
+        }
+    })
+   
+    $(document).on('click', '.btnContinueShoping' , function(e){
+        e.preventDefault();
+        window.location.href = `/customers`
+    })
+
+    $(document).on('click', '.btnPlus', function(e){
+        e.preventDefault();
+        let idProduct = $(this).attr("_idProduct");
+        $.ajax({
+            url:`/products/get-infor-product-to-session?id=${idProduct}`,
+            method:"POST",
+            success: resp =>{
+                let result = resp.data;
+                console.log({b:result});
+                $(".PruductAddOrMinus").empty();
+                // $(".PruductAddOrMinus").html(originalState);
+                $(".abc").empty();
+                // $(".infoSumary").html(originalState);
+                $(".cda").empty();
+                //  $(".infoSumary").html(originalState);
+                let a= 0;
+               if( result && result.length >0){
+                    result.forEach( item => {
+                                a += item.total;
+                                    $('.PruductAddOrMinus').append(`
+                                    <div class="cart-single-item ">
+                                        <button _productID="${item.infoProduct._id}" type="button" class="close btnDeleteCart">
+                                                <i class="flaticon-cross"></i>
+                                            </button>
+                                            <div class="product-img">
+                                                <img src="/img/${item.infoProduct.avatar}" alt="Product Image" />
+                                            </div>
+                                            <h6 class="product-name " id="productName" value="${item.infoProduct.title}">${item.infoProduct.title} (1kg)</h6>
+                                            <div class="number-input">
+                                                <button class="minus" _idProduct="${item.infoProduct._id}"></button>
+                                                <input class="quantity" min="1" name="quantity" value="${item.qty}" type="number" />
+                                                <button class="plus btnPlus" _idProduct="${item.infoProduct._id}"></button>
+                                            </div>
+                                            <h6 class="product-price priceProduct">                          
+                                                        ${item.total}
+                                            </h6>
+                                    </div>
+                                        `)
+                                    $('.abc').append(`       
+                                        <div class="total-item sub-total ">
+                                            <span class="title">${item.infoProduct.title}</span>
+                                            <span class="price">${item.total}</span>       
+                                        </div>          
+                                    `)
+                     })
+                     
+                }
+                $('.cda').append(`
+                    <div class="total-item total sumTotal">
+                            <span class="title mb-0">Total</span>
+                            <span class="price mb-0">${a}</span>
+                            </div>
+                            `)
+            }
+        })
+
+    })
+    $(document).on('click', '.minus' , function(e){
+        e.preventDefault();
+        let id = $(this).attr("_idProduct");
+        console.log(id);
+        $.ajax({
+            url: `/products/minus-product-from-cart?id=${id}`,
+            method: 'POST',
+            success: resp =>{
+                    let result = resp.data;
+                    $(".PruductAddOrMinus").empty();
+                // $(".PruductAddOrMinus").html(originalState);
+                $(".abc").empty();
+                // $(".infoSumary").html(originalState);
+                $(".cda").empty();
+                //  $(".infoSumary").html(originalState);
+                let a= 0;
+               if( result && result.length >0){
+                    result.forEach( item => {
+                                a += item.total;
+                                    $('.PruductAddOrMinus').append(`
+                                    <div class="cart-single-item ">
+                                        <button _productID="${item.infoProduct._id}" type="button" class="close btnDeleteCart">
+                                                <i class="flaticon-cross"></i>
+                                            </button>
+                                            <div class="product-img">
+                                                <img src="/img/${item.infoProduct.avatar}" alt="Product Image" />
+                                            </div>
+                                            <h6 class="product-name " id="productName" value="${item.infoProduct.title}">${item.infoProduct.title} (1kg)</h6>
+                                            <div class="number-input">
+                                                <button class="minus" _idProduct="${item.infoProduct._id}"></button>
+                                                <input class="quantity" min="1" name="quantity" value="${item.qty}" type="number" />
+                                                <button class="plus btnPlus" _idProduct="${item.infoProduct._id}"></button>
+                                            </div>
+                                            <h6 class="product-price priceProduct">                          
+                                                        ${item.total}
+                                            </h6>
+                                    </div>
+                                        `)
+                                    $('.abc').append(`       
+                                        <div class="total-item sub-total ">
+                                            <span class="title">${item.infoProduct.title}</span>
+                                            <span class="price">${item.total}</span>       
+                                        </div>          
+                                    `)
+                     })
+                     
+                }
+                $('.cda').append(`
+                    <div class="total-item total sumTotal">
+                            <span class="title mb-0">Total</span>
+                            <span class="price mb-0">${a}</span>
+                            </div>
+                            `)
+            }
+        })
+    }) 
+
+    $(Document).on('click', '.btnDeleteCart' , function(e) {
+         e.preventDefault();
+         let id = $(this).attr("_productID");
+         console.log({ id });
+         $.ajax({
+             url: `/products/pull-product-from-session?id=${id}`,
+             method: 'POST',
+             success: resp => {
+                let result = resp.data;
+                console.log({result})
+                $(".PruductAddOrMinus").empty();         
+                $(".abc").empty();
+                $(".cda").empty();
+                let a= 0;
+               if( result && result.length > 0){
+                    result.forEach( item => {
+                                a += item.total;
+                                    $('.PruductAddOrMinus').append(`
+                                    <div class="cart-single-item ">
+                                        <button _productID="${item.infoProduct._id}" type="button" class="close btnDeleteCart">
+                                                <i class="flaticon-cross"></i>
+                                            </button>
+                                            <div class="product-img">
+                                                <img src="/img/${item.infoProduct.avatar}" alt="Product Image" />
+                                            </div>
+                                            <h6 class="product-name " id="productName" value="${item.infoProduct.title}">${item.infoProduct.title} (1kg)</h6>
+                                            <div class="number-input">
+                                                <button class="minus" _idProduct="${item.infoProduct._id}"></button>
+                                                <input class="quantity" min="1" name="quantity" value="${item.qty}" type="number" />
+                                                <button class="plus btnPlus" _idProduct="${item.infoProduct._id}"></button>
+                                            </div>
+                                            <h6 class="product-price priceProduct">                          
+                                                        ${item.total}
+                                            </h6>
+                                    </div>
+                                        `)
+                                    $('.abc').append(`       
+                                        <div class="total-item sub-total ">
+                                            <span class="title">${item.infoProduct.title}</span>
+                                            <span class="price">${item.total}</span>       
+                                        </div>          
+                                    `)
+                     })
+                }
+                $('.cda').append(`
+                    <div class="total-item total sumTotal">
+                            <span class="title mb-0">Total</span>
+                            <span class="price mb-0">${a}</span>
+                            </div>
+                            `)
+            }
+        })
+})
+</script>

@@ -1,0 +1,762 @@
+<%- include('../patials/header.ejs') -%>
+<section class="hero-section">
+    <div class="hero-slider">
+        <%if(listPromotion&& listPromotion.length>0){%>
+            <%listPromotion.forEach(item =>{%>
+                <%if(item.status==1){%>
+                <div class="hero-slide-item" style="background-image: url(/img/<%=item.avatar%>);">
+                    <div class="container">
+                        <div class="hero-inner">
+                            <h1 class="mb-20 light"> <span><%=item.title%></span></h1>
+                            <p class="mb-40 mr-120 light">
+                               <%=item.content%>
+                            </p>
+                            <div class="hero-btn">
+                                <a href="/customers/danh-sach-san-pham" class="theme-btn">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <%}%>
+    <%})%>
+    <%}%>
+    </div>
+</section>
+<section class="special-offer text-center pt-110 rpt-70 pb-35 ">
+    <div class="container">
+        <!-- <div class="section-title mb-15">
+            <h2>Sản phẩm được đề xuất</h2>
+           
+        </div> -->
+
+        <!-- <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="special-offer-inner special-offer-slider bbb">
+                   
+                            <div class="single-product">
+                                <div class="special-offer-product bg-white m-25 p-25 b1 br-5">
+                                    <div class="off">
+                                       
+                                        <span>off</span></div>
+                                    <div class="product-img-wrap">
+                                        <img src="/img/" alt="img" />
+                                    </div>
+                                    <div class="product-content">
+                                        <div class="offer-product-price">
+                                            <span class="discounted-price">
+                                              
+                                            </span>
+                                            <span class="actual-price has-discount"> </span>
+                                        </div>
+                                        <p></p>
+                                    </div>
+                                    <div class="product-action">
+                                        <a _productIDToCart="" _infoUser= ""  _productIDToCart="" class="add-to-btn btnAddToCart">Add to Cart</a>
+                                        <div class="add-wishlist wish">
+                                            <i class="fa fa-heart-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+      
+                </div>
+            </div>
+        </div> -->
+        <div class="row justify-content-center parentProductConfHasBest" style="display: none;">
+            <div class="col-lg-10">
+                <div class="special-offer-inner special-offer-slider listProRecommend" style= "display: none;">
+<!--                    
+                            <div class="single-product">
+                                <div class="special-offer-product bg-white m-25 p-25 b1 br-5">
+                                    <div class="off">
+                                       
+                                        <span>off</span></div>
+                                    <div class="product-img-wrap">
+                                        <img src="/img/" alt="img" />
+                                    </div>
+                                    <div class="product-content">
+                                        <div class="offer-product-price">
+                                            <span class="discounted-price">
+                                              
+                                            </span>
+                                            <span class="actual-price has-discount"> </span>
+                                        </div>
+                                        <p></p>
+                                    </div>
+                                    <div class="product-action">
+                                        <a _productIDToCart="" _infoUser= ""  _productIDToCart="" class="add-to-btn btnAddToCart">Add to Cart</a>
+                                        <div class="add-wishlist wish">
+                                            <i class="fa fa-heart-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="special-offer text-center pt-110 rpt-70 pb-35">
+    <div class="container">
+        <div class="section-title mb-15">
+            <h2>Sản Phẩm Giảm Giá Nhiều Nhất</h2>
+           
+        </div>
+        <!-- sap xep mang tang dan roi hien ra -->
+    
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="special-offer-inner special-offer-slider">
+                    <% let arr = []; %>
+                    <% if (listProduct && listProduct.length){ %> 
+                        <% for(let i = 0; i < listProduct.length -1; i++){ %> 
+                                <% if(listProduct[i].promotion) { %> 
+                                    <% arr.push(listProduct[i])%>
+                                <%}%> 
+                        <%}%> 
+                        <% for(let i = 0; i < arr.length -1; i++){%>
+                            <% for(let j = i +1; j < arr.length; j++){%>
+                                <%if(arr[i].promotion.percent < arr[j].promotion.percent){%>
+                                    <%let swap = arr[i];%>
+                                    <%arr[i] = arr[j];%>
+                                    <%arr[j] = swap;%>
+                                    <%}%>
+                                <%}%>
+                            <div class="single-product">
+                                <div class="special-offer-product bg-white m-25 p-25 b1 br-5">
+                                    <div class="off">
+                                        <%if(arr[i].promotion){%>
+                                            <%=arr[i].promotion.percent%><%}else{%>0<%}%>%
+                                        <span>off</span></div>
+                                    <div class="product-img-wrap">
+                                        <img src="/img/<%=arr[i].avatar%>" alt="img" />
+                                    </div>
+                                    <div class="product-content">
+                                        <div class="offer-product-price">
+                                            <span class="discounted-price">
+                                                $<%if(arr[i].promotion){%>
+                                                    <%=arr[i].price-arr[i].price*arr[i].promotion.percent/100%>
+                                                    <%}else{%>
+                                                        <%=arr[i].price%>
+                                                        <%}%>
+                                            </span>
+                                            <span class="actual-price has-discount"> <%=arr[i].price%></span>
+                                        </div>
+                                        <p> <%=arr[i].title%></p>
+                                    </div>
+                                    <div class="product-action">
+                                        <a _productIDToCart="<%=arr[i]._id%>" _infoUser= "<%if(infoUser){%><%=infoUser._id%><%}%>"  _productIDToCart="<%=listProduct[i]._id%>" class="add-to-btn btnAddToCart">Add to Cart</a>
+                                        <div class="add-wishlist wish">
+                                            <i class="fa fa-heart-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                <%}%>
+              <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="categories-section text-center pt-60 pb-30">
+    <div class="container">
+        <div class="section-title mb-45">
+            <h2>Mua sắm theo Danh Mục</h2>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+        </div>
+        <div class="row">
+        <%if(listCategory && listCategory.length>0){%>
+            <%listCategory.forEach(item=> {%>
+            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-30">
+                <a href="/customers/danh-sach-san-pham?id=<%=item._id%>" class="categori-item bg-white br-5">
+                    <div class="categori-img d-flex align-items-center justify-content-center">
+                        <img src="/img/<%=item.avatar%>" alt="img" />
+                    </div>
+                    <div class="categori-name">
+                        <span><%=item.title%></span>
+                    </div>
+                </a>
+            </div>
+    <%})%>
+    <%}%>    
+</div>
+
+</section>
+<section class="advertise-offer pt-60 pb-60 rpt-20 rpb-20">
+    <div class="container">
+        <div class="row col-gap-40">
+            <div class="col-lg-6 rmb-30">
+                <div class="advertise d-flex align-items-center justify-content-between h-100 bg-color3 br-5">
+                    <div class="advertise-text pt-40 pl-40 pb-40">
+                        <h6>Fresh Fruits</h6>
+                        <h3>Healthy Food</h3>
+                        <p>Get 20% Off Selected Product</p>
+                        <a  href="shop.html" class="theme-btn">Order Now</a>
+                    </div>
+                    <div class="advertise-img pr-20">
+                        <img src="assets/img/product/f3.png" alt="" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="advertise d-flex align-items-center justify-content-between h-100 bg-color4 br-5">
+                    <div class="advertise-text pt-40 pl-40 pb-40">
+                        <h6>Fresh Fruits</h6>
+                        <h3>Healthy Food</h3>
+                        <p>Get 20% Off Selected Product</p>
+                        <a href="shop.html" class="theme-btn">Order Now</a>
+                    </div>
+                    <div class="advertise-img pr-20">
+                        <img src="assets/img/product/f4.png" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="made-for-product text-center pt-45 pb-20">
+    <div class="container">
+        <div class="section-title mb-45">
+            <h2 >Sản phẩm khuyến mãi</h2>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+        </div>
+
+        <div class="row">
+        <%if(listProduct && listProduct.length>0){%>
+                <%for(let i=0;i< listProduct.length;i++){%>
+            
+            <div class="custom-5-item col-xl-3 col-lg-4 col-md-6">
+                <div class="product">
+                    <div class="product-img-wrap">
+                        <img src="/img/<%=listProduct[i].avatar%>" alt="img" />
+                        <button class="quick-view btnQuickView" type="button" data-toggle="modal" _infoUser= "<%if(infoUser){%><%=infoUser._id%><%}%>" _productID="<%=listProduct[i]._id%>" data-target="#quick-view">Quick View</button>
+                    </div>
+                    <div class="product-content-wrap">
+                        <div class="product-content">
+                            <p> 
+                                <a href="/customers/chi-tiet-san-pham?id=<%=listProduct[i]._id%>">
+                                    <%=listProduct[i].title%>     
+                                     <br/>
+                                    (1 kg)
+                                </a>
+                            </p>
+                        </div>
+                        
+                        <div class="product-action">
+                            
+                                    <a lengthCart="1" style="cursor: pointer;" _infoUser = "<%if(infoUser){%><%=infoUser._id%><%}%>"  _productIDToCart="<%=listProduct[i]._id%>"  class="add-to-btn small-btn btnAddToCart">
+                                        <i class="flaticon-shopping-cart"></i>
+                                        <span>Add to Cart</span>
+                                        <h5 class="product-price">
+                                           <%if(listProduct[i].promotion){%>
+                                            <%=listProduct[i].price-listProduct[i].price*listProduct[i].promotion.percent/100%>
+                                            <%}else{%>
+                                                <%=listProduct[i].price%>
+                                                <%}%>
+                                        </h5>
+                                    </a>
+    
+                            <div class="add-wishlist">
+                                <i class="fa fa-heart-o"></i>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal product-modal fade" id="quick-view" tabindex="-1" role="dialog" aria-hidden="true">
+          
+                <div class="modal-dialog viewDetailProduct" role="document">
+                    <div class="modal-content">
+                        
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-35 pt-0">
+                            <div class="product-quick-view">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-6 ">
+                                            <div class="product-preview-wrap   ">
+                                                <div class="tab-content bg-white p-50 b1 br-5">
+                                                    <div class="tab-pane" id="preview1">
+                                                        <img src="/img/<%=listProduct[i].avatar%>" alt="Product Preview Image" data-magnify-src="" />
+                                                    </div>
+                                                    <div class="tab-pane active" id="preview2">
+                                                        <img src="/img/<%=listProduct[i].avatar%>" alt="Product Preview Image" data-magnify-src="" />
+                                                    </div>
+                                                    
+                                                </div>
+                                                <ul class="nav nav-tabs flex-nowrap align-content-between mt-30">
+                                                    <%listProduct[i].gallery.forEach(item =>{%>
+                                                    <li>
+                                                        <a data-toggle="tab" href="#preview1">
+                                                            <img src="/img/<%=item%>" alt="Product Thumbnail Image" />
+                                                        </a>
+                                                    </li>
+                                                    <%})%>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="product-details text-left bg-white ml-25 px-50 py-45 b1 br-5">
+                                                <h3 class="mb-25 rmt-25"></h3>
+                                                
+                                                <div class="rating mb-25">
+                                                    <div class="star mr-15">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                    <div class="text">(13 Review)</div> 
+                                                </div>
+                                                <p>Sed egestas, ante et vulputate volutpat, eropede semper est, vitluctus metus libero eu augue. Morbi purus libero, faucibus adipiscing.</p>
+                                                <p>commodo quis, gravida id, est. Sed lectus. Praest elemhendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat.lacus a ultrices.</p>
+                                                <h6>Availability: <span>In Stock</span></h6>
+                                                <h4 class="price"><%if(listProduct[i].promotion){%><%=listProduct[i].price%><%}else{%><%=listProduct[i].price%><%}%></h4>
+                                                <div class="product-spinner mt-20">
+                                                    <div class="number-input b1">
+                                                        <button class="minus"></button>
+                                                        <input min="1" name="quantity" value="2" type="number" />
+                                                        <button class="plus"></button>
+                                                    </div>
+                                                    <a href="" class="theme-btn br-30 ml-20">Add to Cart</a>
+                                                    <div class="add-wishlist">
+                                                        <i class="fa fa-heart-o"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+   <%}%>
+<%}%>
+            
+            
+            <div class="blog-btn text-center w-100 mt-25 mb-30"><a href="shop.html" _lengthProduct="<%= listProduct.length %>" class="theme-btn br-30 btnshow">Show More</a></div>
+        </div>
+    </div>
+</section>
+<section class="how-work text-center pt-60 pb-60 rpt-20 rpb-20">
+    <div class="container">
+        <div class="section-title">
+            <h2>Vận chuyển</h2>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="work-box down-dashed">
+                    <span class="work-number"><i class="flaticon-shopping-cart"></i></span>
+                    <h5>Step 1</h5>
+                    <span class="line"></span>
+                    <p>Chọn sản phẩm</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="work-box up-dashed">
+                    <span class="work-number"><i class="flaticon-harvest"></i></span>
+                    <h5>Step 2</h5>
+                    <span class="line"></span>
+                    <p>Thêm vào giỏ hàng</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="work-box down-dashed">
+                    <span class="work-number"><i class="flaticon-address"></i></span>
+                    <h5>Step 3</h5>
+                    <span class="line"></span>
+                    <p>Thanh toán</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="work-box">
+                    <span class="work-number"><i class="flaticon-delivery-truck"></i></span>
+                    <h5>Step 4</h5>
+                    <span class="line"></span>
+                    <p>Giao hàng</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="latest-news pt-10 pb-90 rpb-50">
+    <div class="container">
+        <div class="section-title text-center mb-45">
+            <h2>Our Latest News</h2>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+        </div>
+        <div class="row col-gap-60">
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="latest-news-box mb-30">
+                    <div class="latest-news-img">
+                        <img src="assets/img/blog/blog-1.png" alt="Blog Image" />
+                    </div>
+                    <div class="latest-news-content">
+                        <div class="post-title br-5">
+                            <span class="date">14 Aug , 2019</span>
+                            <h5><a href="blog-details.html">Sunday Morning Banana Pancakes</a></h5>
+                        </div>
+                        <p>Lorem ipsum dolor sit consectetuer adipiscing. Donec odio. Quisque volutpat mattis eros.</p>
+                        <div class="blog-meta">
+                            <div class="post-author">
+                                <img src="assets/img/blog/post-author1.png" alt="Post Author" />
+                                <span>Scott M. Sackett</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="latest-news-box mb-30">
+                    <div class="latest-news-img">
+                        <img src="assets/img/blog/blog-2.png" alt="Blog Image" />
+                    </div>
+                    <div class="latest-news-content">
+                        <div class="post-title br-5">
+                            <span class="date">14 Aug , 2019</span>
+                            <h5><a href="blog-details.html">How To Create a Holiday Dessert Bar</a></h5>
+                        </div>
+                        <p>Lorem ipsum dolor sit consectetuer adipiscing. Donec odio. Quisque volutpat mattis eros.</p>
+                        <div class="blog-meta">
+                            <div class="post-author">
+                                <img src="assets/img/blog/post-author3.png" alt="Post Author" />
+                                <span>Sergio L. Weis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="latest-news-box mb-30">
+                    <div class="latest-news-img">
+                        <img src="assets/img/blog/blog-2.png" alt="Blog Image" />
+                    </div>
+                    <div class="latest-news-content">
+                        <div class="post-title br-5">
+                            <span class="date">14 Aug , 2019</span>
+                            <h5><a href="blog-details.html">Gluten Free Peanut Butter Pear Bites</a></h5>
+                        </div>
+                        <p>Lorem ipsum dolor sit consectetuer adipiscing. Donec odio. Quisque volutpat mattis eros.</p>
+                        <div class="blog-meta">
+                            <div class="post-author">
+                                <img src="assets/img/blog/post-author6.png" alt="Post Author" />
+                                <span>Frank L. Anguiano</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="latest-news-box mb-30">
+                    <div class="latest-news-img">
+                        <img src="assets/img/blog/blog-4.png" alt="Blog Image" />
+                    </div>
+                    <div class="latest-news-content">
+                        <div class="post-title br-5">
+                            <span class="date">14 Aug , 2019</span>
+                            <h5><a href="blog-details.html">A Beautiful Sunday Morning</a></h5>
+                        </div>
+                        <p>Lorem ipsum dolor sit consectetuer adipiscing. Donec odio. Quisque volutpat mattis eros.</p>
+                        <div class="blog-meta">
+                            <div class="post-author">
+                                <img src="assets/img/blog/post-author4.png" alt="Post Author" />
+                                <span>Charlene P. Garza</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- include('../patials/footer.ejs') -%>
+<%- include('../scripts/customer_script.ejs')%>
+<!-- <script>
+   $(document).on('click','.btnQuickView', function( e ){
+        e.preventDefault();
+        let id = $(this).attr('_productID');
+        console.log({id})
+        $.ajax({
+            url:`/products/find-product-for-qickView/${id}`,
+            method: 'POST',
+            success: resp => {
+               
+                let result = resp.data
+                console.log({result})
+                let gallery = '';
+                if(result.gallery && result.gallery.length){
+                    result.gallery.forEach(item =>{
+                            gallery += `<li>
+                                <a data-toggle="tab" href="#preview1">
+                                    <img src="/img/${item}" alt="Product Thumbnail Image" />
+                                </a>
+                            </li>`
+                    })
+                }
+            
+                $('.viewDetailProduct').empty();
+                let price;
+                if(result.promotion && result.promotion.status ==1){
+                   
+                    price = result.price - result.price*result.promotion.percent/100
+                }else{
+                    price = result.price
+                }
+                $('.more').append(`
+
+                         <option name="category" value="${result._id}" > ${result.title}</option>
+                            
+                `)
+                $('.viewDetailProduct').append(`
+                <div class="modal-dialog viewDetailProduct" role="document">
+                    <div class="modal-content">
+                        
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-35 pt-0">
+                            <div class="product-quick-view">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-6 ">
+                                            <div class="product-preview-wrap   ">
+                                                <div class="tab-content bg-white p-50 b1 br-5">
+                                                    <div class="tab-pane" id="preview1">
+                                                        <img src="/img/${result.avatar}" alt="Product Preview Image" data-magnify-src="" />
+                                                    </div>
+                                                    <div class="tab-pane active" id="preview2">
+                                                        <img src="/img/${result.avatar}" alt="Product Preview Image" data-magnify-src="" />
+                                                    </div>
+                                                    
+                                                </div>
+                                                <ul class="nav nav-tabs flex-nowrap align-content-between mt-30">
+                                             
+                                                    ${gallery}
+                                              
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="product-details text-left bg-white ml-25 px-50 py-45 b1 br-5">
+                                                <h3 class="mb-25 rmt-25"></h3>
+                                                
+                                                <div class="rating mb-25">
+                                                    <div class="star mr-15">
+                                                        <i class="fa fa-star"> </i>
+                                                        <i class="fa fa-star"> </i>
+                                                        <i class="fa fa-star"> </i>
+                                                        <i class="fa fa-star"> </i>
+                                                        <i class="fa fa-star"> </i>
+                                                    </div>
+                                                    <div class="text">(13 Review)</div> 
+                                                </div>
+                                                <p>Sed egestas, ante et vulputate volutpat, eropede semper est, vitluctus metus libero eu augue. Morbi purus libero, faucibus adipiscing.</p>
+                                                <p>commodo quis, gravida id, est. Sed lectus. Praest elemhendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat.lacus a ultrices.</p>
+                                                <h6>Availability: <span>${result.title}</span></h6>
+                                                <h4 class="price"> ${price}</h4>
+                                                <div class="product-spinner mt-20">
+                                                    <div class="number-input b1">
+                                                        <button class="minus"></button>
+                                                        <input min="1" name="quantity" value="2" type="number" />
+                                                        <button class="plus"></button>
+                                                    </div>
+                                                    <a href="" class="theme-btn br-30 ml-20">Add to Cart</a>
+                                                    <div class="add-wishlist">
+                                                        <i class="fa fa-heart-o"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                `)
+           
+                    
+            }
+        })
+    })
+    let arrNull = [];
+    $(document).on("click", ".btnAddToCart", function (e) {
+        e.preventDefault();
+        arrNull.push('push');
+        let productID = $(this).attr("_productIDToCart");
+        $.ajax({
+            url: `/products/get-infor-product-to-session?id=${productID}`,
+            method: "POST",
+            success: (resp) => {
+                let result = resp.data;
+                // console.log({result});
+                if (!resp.error) {
+                    toastr["success"]("Bạn đã thêm vào giỏ hàng", "Thành Công");
+                    // window.location.reload();
+                    $('.cartView').empty();
+                    $('.aaaa').attr('content', `${result.length}`)
+                    if(result.length < 4){
+                        result.forEach((element, index) => {
+                            $('.cartView').append(`
+                                                    <div class="alert single-collection ">
+
+                                                        <button data-dismiss="alert"><i class="flaticon-delete-button"></i></button>
+                                                        <div class="collection-image">
+                                                            <img src="/img/${element.item.avatar}" alt="" />
+                                                        </div>
+                                                        <div class="collection-content">
+                                                            <p>
+                                                                ${element.item.title}
+                                                                
+                                                            </p>
+                                                            <h6>
+                                                                ${element.item.price}
+                                                            </h6>
+                                                        </div>
+                                                        </div>
+                                                        
+                        `)
+                        
+                    })
+                        $('.cartView').append(`
+                                                        <div class="collection-btn">
+                                                    <a href="/customers/cart" class="theme-btn bg-blue no-shadow mr-10">View Cart</a>
+
+                                                </div>
+                        `)
+                        
+                    }else{
+                        result.slice(0,4).forEach(element => {
+                            $('.cartView').append(`
+                                                    <div class="alert single-collection ">
+                                                        <button data-dismiss="alert"><i class="flaticon-delete-button"></i></button>
+                                                        <div class="collection-image">
+                                                            <img src="/img/${element.item.avatar}" alt="" />
+                                                        </div>
+                                                        <div class="collection-content">
+                                                            <p>
+                                                                ${element.item.title}
+                                                                
+                                                            </p>
+                                                            <h6>
+                                                                ${element.item.price}
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                    
+                        `)
+                    }
+                    )
+                    $('.cartView').append(`
+                                <h6>
+                                    ....To be continous
+                                </h6>
+                                <div class="collection-btn">
+                            <a href="/customers/cart" class="theme-btn bg-blue no-shadow mr-10">View Cart</a>
+                        </div>
+                    `)
+                }
+            }else{
+                toastr["error"]("Bạn không thể thêm vào giỏ hàng", "Thật Bại");
+            }
+        }
+    })
+    })
+    $(document).on('click','.btnshow',function(e){
+        e.preventDefault();
+        let lengthProduct = $(this).attr('_lengthProduct')
+        // console.log({lengthProduct})
+        $.ajax({
+            url:`/products/get-list-by-length?lengthProduct=${lengthProduct}`,
+            method:'GET',
+            success: resp =>{
+                 for(let i=0; i<resp.length; i++)
+                 {
+                    let itemPrice
+                    if( resp[i].promotion && resp[i].promotion.status == 1 )
+                    {
+                        itemPrice = resp[i].price - resp[i].price*resp[i].promotion.percent/100
+                    }else{
+                        itemPrice = resp[i].price
+                    }
+                    $('.product').closest('.row').append(`
+                        <div class="custom-5-item col-xl-3 col-lg-4 col-md-6">
+                            <div class="product">
+                                <div class="product-img-wrap">
+                                    <img src="/img/${resp[i].avatar}" alt="img" />
+                                    <button class="quick-view" type="button" data-toggle="modal" _productID=${resp[i]._id} data-target="#quick-view">Quick View</button>
+                                </div>
+                                <div class="product-content-wrap">
+                                    <div class="product-content">
+                                        <p> 
+                                            <a href="/customers/chi-tiet-san-pham?id=${resp[i]._id}">
+                                                ${resp[i].title}
+                                                <br/>
+                                                (1 kg)
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="product-action">
+                                        <a lengthCart="1" style="cursor: pointer;"  _productIDToCart="${resp[i]._id}"  class="add-to-btn small-btn btnAddToCart">
+                                            <i class="flaticon-shopping-cart"></i>
+                                            <span>Add to Cart</span>
+                                            <h5 class="product-price">
+                                                ${itemPrice}
+                                            </h5>
+                                        </a>
+                                        <div class="add-wishlist">
+                                            <i class="fa fa-heart-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `)
+                }
+                $('.product').closest('.row').find('.blog-btn').remove();
+                $('.product').closest('.row').append(`
+                    <div class="blog-btn text-center w-100 mt-25 mb-30"><a href="shop.html" _lengthProduct="" class="theme-btn br-30 btnshow">Show More</a></div>
+                `);
+                $('.btnshow').attr('_lengthProduct', `${Number(lengthProduct) + 5}`)
+            }
+        })
+    })
+     
+</script> -->
+
+<style> 
+    .flaticon-after[lengthCart]:after{
+        content: attr(lengthCart);
+        position:absolute;
+        height:17px;
+        width:17px;
+        color:#fff;
+        background:#5f66e0;
+        border-radius:50%;
+        right:-10px;
+        top:-10px;
+        font-size:12px;
+        line-height:16px;
+        text-align:center
+        }
+  
+</style>

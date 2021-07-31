@@ -1,0 +1,60 @@
+<%- include('../../dashboard/partials/header.ejs') %> 
+<%- include('../../dashboard/partials/side-bar.ejs') %>
+
+<section id="main-content">
+    <section class="wrapper">
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            <table class="table table-striped table-advance table-hover">
+                <h4><i class="fa fa-angle-right"></i>DANH SÁCH KHUYẾN MÃI</h4>
+                <hr />
+                <thead>
+                    <tr>
+                        
+                        <th><i class="fa fa-bullhorn"></i> Thông Tin Khuyến Mãi</th>
+                        <th><i class="fa fa-bullhorn"></i> Nội Dung</th>
+                        <th><i class="fa fa-bullhorn"></i> Phần Trăm Khuyến Mãi</th>
+                        <th><i class="fa fa-bullhorn"></i> Poster</th>
+                        <th><i class="fa fa-bullhorn"></i> Trạng Thái</th>
+                        <!-- <th><i class="fa fa-bookmark"></i> Profit</th>
+                        <th><i class="fa fa-edit"></i> Status</th> -->
+                       <%if( listPromotion && listPromotion.length >0){%>
+                        <% listPromotion.forEach(element =>{%> 
+                    </tr>
+                </thead>
+                <tbody>  
+                         
+                                <td><%=element.title%></td>
+                                <td><%=element.content%></td>
+                                <td><%=element.percent%>%</td>
+                                <td>
+                                    <!-- <img src="/img/<%=element.avatar%>" > -->
+                                </td>
+                                <td><%=element.status%></td>
+
+                                    <!-- <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button> -->
+                                <td>                                   
+                                 <a href="/promotions/remove/<%=element._id%>">  
+                                    XÓA
+                                </a>
+                               </td>     
+                               <td>                                   
+                                <a href="/promotions/edit/<%=element._id%>">  
+                                  SỬA
+                               </a>
+                              </td>       
+                                                     
+                    </td>
+                    <%})%>
+                               <%}%>     
+                </tbody>
+            </table>
+        </div>
+        <!-- /content-panel -->
+    </div>
+    <!-- /col-md-12 -->
+</div>
+</section>
+</section>
+<%- include('../../dashboard/partials/footer.ejs') %>

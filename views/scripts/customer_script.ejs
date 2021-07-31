@@ -1,0 +1,328 @@
+<script>
+    $(document).on('click','.btnQuickView', function( e ){
+         e.preventDefault();
+
+         let id = $(this).attr('_productID');
+         let userID = $(this).attr('_infoUser');
+         console.log({id})
+        
+         $.ajax({
+             url:`/products/find-product-for-qickView/${id}`,
+             method: 'POST',
+             data: {userID},
+             success: resp => {
+                 let result = resp
+                 console.log({result})
+                 let gallery = '';
+                 if(result.gallery && result.gallery.length){
+                     result.gallery.forEach(item =>{
+                             gallery += `<li>
+                                 <a data-toggle="tab" href="#preview1">
+                                     <img src="/img/${item}" alt="Product Thumbnail Image" />
+                                 </a>
+                             </li>`
+                     })
+                 }
+             
+                 $('.viewDetailProduct').empty();
+                 let price;
+                 if(result.promotion && result.promotion.status ==1){
+                    
+                     price = result.price - result.price*result.promotion.percent/100
+                 }else{
+                     price = result.price
+                 }
+                 $('.more').append(`
+ 
+                          <option name="category" value="${result._id}" > ${result.title}</option>
+                             
+                 `)
+                 $('.viewDetailProduct').append(`
+                 <div class="modal-dialog viewDetailProduct" role="document">
+                     <div class="modal-content">
+                         
+                         <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                             </button>
+                         </div>
+                         <div class="modal-body p-35 pt-0">
+                             <div class="product-quick-view">
+                                 <div class="container">
+                                     <div class="row">
+                                         <div class="col-lg-6 ">
+                                             <div class="product-preview-wrap   ">
+                                                 <div class="tab-content bg-white p-50 b1 br-5">
+                                                     <div class="tab-pane" id="preview1">
+                                                         <img src="/img/${result.avatar}" alt="Product Preview Image" data-magnify-src="" />
+                                                     </div>
+                                                     <div class="tab-pane active" id="preview2">
+                                                         <img src="/img/${result.avatar}" alt="Product Preview Image" data-magnify-src="" />
+                                                     </div>
+                                                     
+                                                 </div>
+                                                 <ul class="nav nav-tabs flex-nowrap align-content-between mt-30">
+                                              
+                                                     ${gallery}
+                                               
+                                                 </ul>
+                                             </div>
+                                         </div>
+                                         <div class="col-lg-6">
+                                             <div class="product-details text-left bg-white ml-25 px-50 py-45 b1 br-5">
+                                                 <h3 class="mb-25 rmt-25"></h3>
+                                                 
+                                                 <div class="rating mb-25">
+                                                     <div class="star mr-15">
+                                                         <i class="fa fa-star"> </i>
+                                                         <i class="fa fa-star"> </i>
+                                                         <i class="fa fa-star"> </i>
+                                                         <i class="fa fa-star"> </i>
+                                                         <i class="fa fa-star"> </i>
+                                                     </div>
+                                                     <div class="text">(13 Review)</div> 
+                                                 </div>
+                                                 <p>Sed egestas, ante et vulputate volutpat, eropede semper est, vitluctus metus libero eu augue. Morbi purus libero, faucibus adipiscing.</p>
+                                                 <p>commodo quis, gravida id, est. Sed lectus. Praest elemhendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat.lacus a ultrices.</p>
+                                                 <h6>Availability: <span>${result.title}</span></h6>
+                                                 <h4 class="price"> ${price}</h4>
+                                                 <div class="product-spinner mt-20">
+                                                     <div class="number-input b1">
+                                                         <button class="minus"></button>
+                                                         <input min="1" name="quantity" value="2" type="number" />
+                                                         <button class="plus"></button>
+                                                     </div>
+                                                     <a href="" class="theme-btn br-30 ml-20">Add to Cart</a>
+                                                     <div class="add-wishlist">
+                                                         <i class="fa fa-heart-o"></i>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                         
+                     </div>
+                 </div>
+                 `)
+             }
+         })
+        
+     })
+     let arrNull = [];
+     $(document).on("click", ".btnAddToCart", function (e) {
+         e.preventDefault();
+         arrNull.push('push');
+         let productID = $(this).attr("_productIDToCart");
+         console.log(productID)
+         let infoUser = $(this).attr("_infoUser");
+         if(!infoUser){
+            
+             window.location.href=`/customers/dang-nhap`;
+         }
+         else{
+         $.ajax({
+             url: `/products/get-infor-product-to-session?id=${productID}`,
+             method: "POST",
+             success: (resp) => {
+                 let result = resp.data;
+                 let productRecomende = resp.dataRecomend;
+                 console.log({ productRecomende })
+                 if(productRecomende.length == 0){
+                    $(`.listProRecommend`).parents(".parentProductConfHasBest").empty()
+                 }
+                 if (!resp.error) {
+                     toastr["success"]("Bạn đã thêm vào giỏ hàng", "Thành Công");
+                     }
+            
+                    //  $(`.parentProductConfHasBest`).empty();
+                    let infoUser = resp.infoUser 
+                     if(productRecomende && productRecomende.length > 0){
+                         productRecomende.forEach( element =>{
+                             let a ;
+                                if(element.promotion){
+                                    a = element.price - element.price * element.promotion.percent / 100;
+
+                                }else{
+                                    a = element.price 
+                                }
+                                
+                                $(`.listProRecommend`).parents(".parentProductConfHasBest").append(`
+
+                                        <div class="single-product">
+                                        <div class="special-offer-product bg-white m-25 p-25 b1 br-5">
+                                            <div class="off">
+                                            ${element.promotion.percent}%
+                                                <span>off</span></div>
+                                            <div class="product-img-wrap">
+                                                <img src="/img/${element.avatar}" alt="img" />
+                                            </div>
+                                            <div class="product-content">
+                                                <div class="offer-product-price">
+                                                    <span class="discounted-price">
+                                                    ${a}
+                                                    </span>
+                                                    <span class="actual-price has-discount"> $${element.price}</span>
+                                                </div>
+                                                <p> ${element.title}</p>
+                                            </div>
+                                            <div class="product-action">
+                                                <a  _productIDToCart="${element._id}" _infoUser=${infoUser.data._id}  class="add-to-btn btnAddToCart">Add to Cart</a>
+                                                <div class="add-wishlist wish">
+                                                    <i class="fa fa-heart-o"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                                    `)
+                        })
+                     // window.location.reload();
+                     $('.cartView').empty();
+                     $(`.listProRecommend`).parents(".parentProductConfHasBest").show();
+                     $('.aaaa').attr('content', `${result.length}`)
+                     if(result.length < 4){
+                         result.forEach((element, index) => {
+                             $('.cartView').append(`
+                                                     <div class="alert single-collection ">
+ 
+                                                         <button data-dismiss="alert"><i class="flaticon-delete-button"></i></button>
+                                                         <div class="collection-image">
+                                                             <img src="/img/${element.infoProduct.avatar}" alt="" />
+                                                         </div>
+                                                         <div class="collection-content">
+                                                             <p>
+                                                                 ${element.infoProduct.title}
+                                                                 
+                                                             </p>
+                                                             <h6>
+                                                                 ${element.infoProduct.price}
+                                                             </h6>
+                                                         </div>
+                                                         </div>
+                                                         
+                         `)
+                         
+                     })
+                         $('.cartView').append(`
+                                                         <div class="collection-btn">
+                                                     <a href="/customers/cart" class="theme-btn bg-blue no-shadow mr-10">View Cart</a>
+ 
+                                                 </div>
+                         `)
+                         
+                     }else{
+                         result.slice(0,4).forEach(element => {
+                             $('.cartView').append(`
+                                                     <div class="alert single-collection ">
+                                                         <button data-dismiss="alert"><i class="flaticon-delete-button btnDeleteProduct _idProduct =${element.infoProduct._id}"></i></button>
+                                                         <div class="collection-image">
+                                                             <img src="/img/${element.infoProduct.avatar}" alt="" />
+                                                         </div>
+                                                         <div class="collection-content">
+                                                             <p>
+                                                                 ${element.infoProduct.title}
+                                                                 
+                                                             </p>
+                                                             <h6>
+                                                                 ${element.infoProduct.price}
+                                                             </h6>
+                                                         </div>
+                                                     </div>
+                                                     
+                         `)
+                     }
+                     )
+                     $('.cartView').append(`
+                                 <h6>
+                                     ....To be continous
+                                 </h6>
+                                 <div class="collection-btn">
+                             <a href="/customers/cart" class="theme-btn bg-blue no-shadow mr-10">View Cart</a>
+                         </div>
+                     `)
+                 }
+             }else{
+                //  toastr["error"]("Bạn không thể thêm vào giỏ hàng", "Thật Bại");
+             }
+         }
+     })
+    }
+     })
+     $(document).on('click','.btnshow',function(e){
+         e.preventDefault();
+         let lengthProduct = $(this).attr('_lengthProduct')
+         // console.log({lengthProduct})
+         $.ajax({
+             url:`/products/get-list-by-length?lengthProduct=${lengthProduct}`,
+             method:'GET',
+             success: resp =>{
+                  for(let i=0; i<resp.length; i++)
+                  {
+                     let itemPrice
+                     if( resp[i].promotion && resp[i].promotion.status == 1 )
+                     {
+                         itemPrice = resp[i].price - resp[i].price*resp[i].promotion.percent/100
+                     }else{
+                         itemPrice = resp[i].price
+                     }
+                     $('.product').closest('.row').append(`
+                         <div class="custom-5-item col-xl-3 col-lg-4 col-md-6">
+                             <div class="product">
+                                 <div class="product-img-wrap">
+                                     <img src="/img/${resp[i].avatar}" alt="img" />
+                                     <button class="quick-view" type="button" data-toggle="modal" _productID=${resp[i]._id} data-target="#quick-view">Quick View</button>
+                                 </div>
+                                 <div class="product-content-wrap">
+                                     <div class="product-content">
+                                         <p> 
+                                             <a href="/customers/chi-tiet-san-pham?id=${resp[i]._id}">
+                                                 ${resp[i].title}
+                                                 <br/>
+                                                 (1 kg)
+                                             </a>
+                                         </p>
+                                     </div>
+                                     <div class="product-action">
+                                         <a lengthCart="1" style="cursor: pointer;"  _productIDToCart="${resp[i]._id}"  class="add-to-btn small-btn btnAddToCart">
+                                             <i class="flaticon-shopping-cart"></i>
+                                             <span>Add to Cart</span>
+                                             <h5 class="product-price">
+                                                 ${itemPrice}
+                                             </h5>
+                                         </a>
+                                         <div class="add-wishlist">
+                                             <i class="fa fa-heart-o"></i>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     `)
+                 }
+                 $('.product').closest('.row').find('.blog-btn').remove();
+                 $('.product').closest('.row').append(`
+                     <div class="blog-btn text-center w-100 mt-25 mb-30"><a href="shop.html" _lengthProduct="" class="theme-btn br-30 btnshow">Show More</a></div>
+                 `);
+                 $('.btnshow').attr('_lengthProduct', `${Number(lengthProduct) + 5}`)
+             }
+         })
+     })
+
+
+
+
+     $(document).on("click" , '.btnDeleteProduct' , function(e) {
+         e.preventDefault();
+         let id = $(this).attr("_idProduct");
+         $.ajax({
+             url : `pull-product-from-session/?id=${id}`,
+             method : "GET",
+             success: resp =>{
+                 console.log(resp)
+             }
+         })
+     })
+ </script>
+ 

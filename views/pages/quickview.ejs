@@ -1,0 +1,83 @@
+<%-include ('../patials/header.ejs')%>
+<div class="modal product-modal fade" id="quick-view" tabindex="-1" role="dialog" aria-hidden="true">
+                
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        
+            <div class="modal-body p-35 pt-0">
+                <div class="product-quick-view">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="product-preview-wrap">
+                                    <div class="tab-content bg-white p-50 b1 br-5">
+                                        <div class="tab-pane" id="preview1">
+                                            <img src="/img/" alt="Product Preview Image" data-magnify-src="assets/img/product/product23.png" />
+                                        </div>
+                                        <div class="tab-pane active" id="preview2">
+                                            <img src="/img/" alt="Product Preview Image" data-magnify-src="assets/img/product/onion3.png" />
+                                        </div>
+                                        <div class="tab-pane" id="preview3">
+                                            <img src="/img/" alt="Product Preview Image" data-magnify-src="assets/img/product/product23.png" />
+                                        </div>
+                                        <div class="tab-pane" id="preview4">
+                                            <img src="/img/" alt="Product Preview Image" data-magnify-src="assets/img/product/onion2.png" />
+                                        </div>
+                                    </div>
+                                    <ul class="nav nav-tabs flex-nowrap align-content-between mt-30">
+                                        <li>
+                                            <a data-toggle="tab" href="#preview1">
+                                                <img src="/img/" alt="Product Thumbnail Image" />
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="product-details text-left bg-white ml-25 px-50 py-45 b1 br-5">
+                                    <h3 class="mb-25 rmt-25"></h3>
+                                    
+                                    <div class="rating mb-25">
+                                        <div class="star mr-15">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="text">(13 Review)</div> 
+                                    </div>
+                                    <p>Sed egestas, ante et vulputate volutpat, eropede semper est, vitluctus metus libero eu augue. Morbi purus libero, faucibus adipiscing.</p>
+                                    <p>commodo quis, gravida id, est. Sed lectus. Praest elemhendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat.lacus a ultrices.</p>
+                                    <h6>Availability: <span>In Stock</span></h6>
+                                    <h4 class="price">$120.00</h4>
+                                    <div class="product-spinner mt-20">
+                                        <div class="number-input b1">
+                                            <button class="minus"></button>
+                                            <input min="1" name="quantity" value="2" type="number" />
+                                            <button class="plus"></button>
+                                        </div>
+                                        <a href="" class="theme-btn br-30 ml-20">Add to Cart</a>
+                                        <div class="add-wishlist">
+                                            <i class="fa fa-heart-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+</div>
+<%-include ('../patials/footer.ejs')%>

@@ -1,0 +1,320 @@
+<%- include('../../dashboard/partials/header.ejs') -%> 
+<%- include('../../dashboard/partials/side-bar.ejs') -%>
+<section id="main-content">
+<section class="wrapper">
+<div class="row mt">
+    <div class="col-lg-12">
+        <h4><i class="fa fa-angle-right"></i> Advanced Form Validations</h4>
+        <div class="form-panel">
+            <div class="form">
+                <form class="cmxform form-horizontal style-form" id="signupForm" method="get" action="">
+                    <div class="form-group">
+                        <label for="firstname" class="control-label col-lg-2">Title</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="title" name="title" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="control-label col-lg-2">Description</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="description" name="title" type="text" />
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label for="firstname" class="control-label col-lg-2">Slug</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="slug" name="title" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname" class="control-label col-lg-2">price</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="price" name="price" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="control-label col-lg-2">amount</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="amount" name="amout" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="lastname" class="control-label col-lg-2">category</label>
+                        <div class="col-lg-10">
+                        <select class="form-control" id="category">
+
+                        <% if( listCategory && listCategory.length){%>
+                            <%listCategory.forEach(item => {%>
+                                <option  value="<%= item._id%>"><%= item.title%></option>
+                            <%})%>
+                        <%} %>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="lastname" class="control-label col-lg-2">promotion</label>
+                        <div class="col-lg-10">
+                        <select class="form-control" id="promotion">
+                                <option value="0" selected>Không chọn khuyến mãi</option>
+                            <% if( listPromotion && listPromotion.length){%>
+                                <%listPromotion.forEach(item => {%>
+                                    <option value="<%= item._id%>"><%= item.title%></option>
+                                <%})%>
+                        <%} %>
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group last">
+                        <label class="control-label col-md-3">Image Upload</label>
+                        <div class="col-md-9">
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="" />
+                                </div>
+                                <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                <div>
+                                    <span class="btn btn-theme02 btn-file">
+                                        <span class="fileupload-new"><i class="fa fa-paperclip"></i> Select image</span>
+                                        <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                        <input type="file" class="default" id="avatar"/>
+                                    </span>
+                                    <a href="advanced_form_components.html#" class="btn btn-theme04 fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
+                                </div>
+                            </div>
+                            <span class="label label-info">NOTE!</span>
+                            <span>
+                                Attached image thumbnail is supported in Latest Firefox, Chrome, Opera, Safari and Internet Explorer 10 only
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group last">
+                        <label class="control-label col-md-3">Image Galary</label>
+                        <div class="col-md-9">
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="/img/" alt="" />
+                                </div>
+                                <div class="fileupload-preview fileupload-exists thumbnail"  style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                <div>
+                                    <span class="btn btn-theme02 btn-file">
+                                        <span class="fileupload-new"><i class="fa fa-paperclip"></i> Select Gallery</span>
+                                        <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                        <input type="file" class="default" id="gallery"   name="files[]" multiple/>
+                                    </span>
+                                    <a href="advanced_form_components.html#" class="btn btn-theme04 fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
+                                </div>
+                            </div>
+                            <span class="label label-info">NOTE!</span>
+                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="agree" class="control-label col-lg-2 col-sm-3">status</label>
+                        <div class="col-lg-10 col-sm-9">
+                            <input type="checkbox" style="width: 20px;" class="checkbox form-control" id="status" name="status" />
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="username" class="control-label col-lg-2">Username</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="username" name="username" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label col-lg-2">Password</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="password" name="password" type="password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password" class="control-label col-lg-2">Confirm Password</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="confirm_password" name="confirm_password" type="password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label col-lg-2">Email</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="email" name="email" type="email" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="agree" class="control-label col-lg-2 col-sm-3">Agree to Our Policy</label>
+                        <div class="col-lg-10 col-sm-9">
+                            <input type="checkbox" style="width: 20px;" class="checkbox form-control" id="agree" name="agree" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newsletter" class="control-label col-lg-2 col-sm-3">Receive the Newsletter</label>
+                        <div class="col-lg-10 col-sm-9">
+                            <input type="checkbox" style="width: 20px;" class="checkbox form-control" id="newsletter" name="newsletter" />
+                        </div>
+                    </div> -->
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button class="btn btn-theme btnAddProduct" type="submit">Save</button>
+                            <button class="btn btn-theme04" type="button">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /form-panel -->
+    </div>
+    <!-- /col-lg-12 -->
+</div>
+</section>
+</section>
+<%- include('../../dashboard/partials/footer.ejs') -%>
+<!-- <script>
+
+    $(document).on('click', '.btnAddProduct', function(e){
+        e.preventDefault();
+        let title = $('#title').val();
+        let price = $('#price').val();
+        let amout = $('#amout').val();
+        let category = $('#category option:selected').val();
+        let promotion = $('#promotion').val();
+        
+        let _imageDemo = $('#avatar')[0].files[0];
+        let status ;
+        $("#status").each(function () {
+            var ischecked = $(this).is(":checked");
+            if (ischecked) {
+                status = 1;
+            }else{
+                status = 0;
+            }
+        });
+        console.log({title, price, amout, category, promotion, _imageDemo, status})
+
+        let a = null;
+        let formData = new FormData();
+
+
+        if (promotion !== 0){
+            formData.append('promotion', promotion);
+        }else{
+            formData.append('promotion', a);
+        }
+
+        if(_imageDemo){
+			formData.append('avatar', _imageDemo);
+        }
+        formData.append('title', title);
+		formData.append('price', price);
+		formData.append('amout', amout);
+		formData.append('category', category);
+		formData.append('status', status);
+        
+        console.log({formData});
+        if(!Number(price) ){
+            toastr["warning"]("Phần trăm phải nhập bằng số", "Cảnh Báo");
+        }
+        if(!Number(amout) ){
+            toastr["warning"]("Số lượng phải nhập bằng số", "Cảnh Báo");
+        }
+        if(!title || !price || !amout || !_imageDemo){
+            toastr["warning"]("Mời bạn nhập đầy đủ thông tin", "Cảnh Báo");
+        }
+        else{
+        $.ajax({
+            url: `/products/add`,
+            method: 'POST',
+            enctype: 'multipart/form-data',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: resp => {
+                if(!resp.error){
+                    toastr["success"]("Bạn thêm thành công", "Thành Công");
+                }else{
+                    toastr["error"]("Bạn không thể thêm, Mời bạn thêm lại", "Thất Bại");
+                }
+            }
+        })
+    }
+
+    }) -->
+
+<!-- </script> -->
+<script>
+    let arrGallery = []
+    $('#gallery').change(function(){
+        for(var i =0 ; i < $(this).get(0).files.length ; ++i){
+            arrGallery.push($(this).get(0).files[i]);
+        }
+    })
+    $(document).on('click', '.btnAddProduct',function(e){
+        e.preventDefault();
+        let title = $('#title').val();
+        let description= $('#description').val();
+        let slug = $('#slug').val();
+        console.log(slug)
+        let price = $('#price').val();
+        let amount =$('#amount').val();
+        let category = $('#category').val();
+        let promotion = $('#promotion').val();
+        let img_file = $('#avatar')[0].files[0];
+        let status;
+        $('#status').each(function (){
+            var isChecked = $(this).is(":checked")
+            if(isChecked)
+            {
+                status= 1
+            }else{
+                status= 0
+            }
+        })
+        let a=null;
+        let formData = new FormData()
+        if(promotion !== 0)
+        {
+            formData.append('promotion',promotion)
+        }else{
+            formData.append('promotion',a)
+        }
+        formData.append('title',title)
+        formData.append('price',price)
+        formData.append('description',description)
+        formData.append('slug',slug)
+        formData.append('amount',amount)
+        
+        formData.append('status', status);
+        if( arrGallery ){
+            arrGallery.forEach( gallery => {
+                formData.append('gallery', gallery)
+            })
+        }
+        if(img_file)
+        {
+            formData.append('avatar',img_file)
+        }
+        console.log(arrGallery)
+        if(!title || !price || !amount || !avatar)
+        {
+            alert('Mời anh nhập đầy đủ thông tin')
+        }else{
+            $.ajax({
+                url:`/products/add`,
+                method:'POST',
+                enctype:"multipart/form-data",
+                data:formData,
+                processData: false,
+                contentType: false,
+                success:resp =>{
+                    if(resp)
+                     {
+                        toastr.success("Thêm Sản Phẩm Thành Công", "Thong Bao");
+                         window.location.href('/products/list')
+                     }
+                     toastr.error("Mời Bạn Nhập Đủ Thông Tin Sản Phẩm", "Thong Bao");
+                }
+            })
+        }
+    })
+</script>

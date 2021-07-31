@@ -1,0 +1,49 @@
+<%- include('../../dashboard/partials/header.ejs') %> 
+<%- include('../../dashboard/partials/side-bar.ejs') %>
+
+<section id="main-content">
+    <section class="wrapper">
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            <table class="table table-striped table-advance table-hover">
+                <h4><i class="fa fa-angle-right"></i>DANH SACH KHACH HANG</h4>
+                <hr />
+                <thead>
+                    <tr>
+                        
+                        <th><i class="fa fa-bullhorn"></i> Tên Khách Hàng</th>
+                        <th><i class="fa fa-bullhorn"></i> Tên Đăng Nhập</th>
+                        <th><i class="fa fa-bullhorn"></i> Mật Khẩu</th>
+                        <th><i class="fa fa-bullhorn"></i> Email Khách Hàng</th>
+                        <!-- <th><i class="fa fa-bookmark"></i> Profit</th>
+                        <th><i class="fa fa-edit"></i> Status</th> -->
+                       
+                        <% if(listUser && listUser.length>0){ %>
+                      <% listUser.forEach( element =>{%> 
+                    </tr>
+                </thead>
+                <tbody>          
+                                <td><%= element.name%></td>
+                                <td><%= element.username%></td>
+                                <td><%= element.password%></td>
+                                <td><%= element.email%></td>
+                                    <!-- <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button> -->
+                                <td>                                   
+                                 <a href="/users/remove/<%= element._id%>">  
+                                    <button class="btn btn-danger btn-xs btnRemoveCategory"><i class="fa fa-trash-o"></i></button>
+                                </a>
+                               </td>                                  
+                    </tr>
+                  <%})%>
+                    <%}%>
+                </tbody>
+            </table>
+        </div>
+        <!-- /content-panel -->
+    </div>
+    <!-- /col-md-12 -->
+</div>
+</section>
+</section>
+<%- include('../../dashboard/partials/footer.ejs') %>

@@ -1,0 +1,51 @@
+<%- include('../../dashboard/partials/header.ejs') %> 
+<%- include('../../dashboard/partials/side-bar.ejs') %>
+
+<section id="main-content">
+    <section class="wrapper">
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            <table class="table table-striped table-advance table-hover">
+                <h4><i class="fa fa-angle-right"></i>DANH SACH DANH MUC</h4>
+                <hr />
+                <thead>
+                    <tr>
+                        
+                        <h2><th><h3 class="fa fa-bullhorn"></h3> Tên Danh Mục</th></h2>
+                        <h2><th><i class="fa fa-bullhorn"></i> Mô Tả</th></h2>
+                        
+                        <!-- <th><i class="fa fa-bookmark"></i> Profit</th>
+                        <th><i class="fa fa-edit"></i> Status</th> -->
+                       <%if( listCategory && listCategory.length >0){%>
+                        <% listCategory.forEach(element =>{%>
+                    
+                    </tr>
+                </thead>
+                <tbody>          
+                                <td><%=element.title%></td>
+                                <td><%=element.description%></td>                     
+                                    <!-- <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>  -->
+                                <td>                                   
+                                 <a href="/categorys/remove/<%=element._id%>">  
+                                   XÓA
+                                </a>   
+                               </td>  
+                               <td>
+                                <a href="/categorys/edit/<%=element._id%>">
+                                    SỬA
+                                </a>
+                               </td>                                
+                    </tr>   
+                    <%})%>
+                    <%}%>
+                </tbody>
+            </table>
+        </div>
+        <!-- /content-panel -->
+    </div>
+    <!-- /col-md-12 -->
+</div>
+</section>
+</section>
+<%- include('../../dashboard/partials/footer.ejs') %>

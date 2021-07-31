@@ -1,0 +1,94 @@
+<%- include('../../dashboard/partials/header') %> 
+<%- include('../../dashboard/partials/side-bar') %>
+<section id="main-content">
+<section class="wrapper">
+<div class="row mt">
+    <div class="col-lg-12">
+        <h3><i class="fa fa-angle-right"></i> EDIT CATEGORY</h3>
+        <div class="form-panel">
+            <div class="form">
+              
+                <form class="cmxform form-horizontal style-form" id="signupForm" method="get" action="">
+                    
+                    <div class="form-group">
+                        <label for="firstname" class="control-label col-lg-2">Title</label>
+                        <div class="col-lg-10">
+                            <input id="title" value="<%=result.title%>" name="Title" type="text" class="form-control" >  
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="control-label col-lg-2">Description</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" value="<%=result.description%>" id="description"  name="description" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="control-label col-lg-2">Avartar</label>
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                <img src="/img/" alt="" />
+                            </div>
+                            <div class="fileupload-preview fileupload-exists thumbnail"  style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                            <div>
+                                <span class="btn btn-theme02 btn-file">
+                                    <span class="fileupload-new"><i class="fa fa-paperclip"></i> Select Avatar</span>
+                                    <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                    <input  type="file" src="/img/"  class="default" id="avatar"/>
+                                </span>
+                                <a href="advanced_form_components.html#" class="btn btn-theme04 fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button class="btn btn-theme btnsaveCategory " _idCategory="<%=result._id%>" type="submit">Save</button>
+                            <a href="/categorys/Them"  ><button class="btn btn-theme04" type="button">Cancel</button> </a>
+                        </div>
+                    </div> 
+                </form>
+               
+       
+            </div>
+        </div>
+        <!-- /form-panel -->
+    </div>
+    <!-- /col-lg-12 -->
+</div>
+</section>
+</section>
+<%- include('../../dashboard/partials/footer') -%>
+<script>
+    $(document).on('click','.btnsaveCategory',function(e){
+        e.preventDefault();
+        let idCategory = $(this).attr('_idCategory');    
+        let title = $('#title').val();
+        let description= $('#description').val();
+        let _imgFile = $('#avatar')[0].files[0];
+        let formData = new FormData()
+        formData.append('title',title)
+        formData.append('description',description)
+        formData.append('avatar',_imgFile)
+        console.log({idCategory,title,description,avatar})
+        if(!title || !description || !avatar)
+        {
+            toastr.error('Thiếu thông tin', 'Bạn phải nhập đầy đủ thông tin')
+        }else{
+            $.ajax({
+                url:`/categorys/update/${idCategory}`,
+                method:'POST',
+                enctype: 'multipart/form-data',
+                data:formData,
+                contentType: false,
+                processData: false,
+                success: resp =>{
+                    if(!resp.error)
+                    {
+                        alert('Cap nhat thanh cong');
+                        // window.location.href('/categorys/list')
+                    }
+                }
+            })
+        }
+    })
+    </script>

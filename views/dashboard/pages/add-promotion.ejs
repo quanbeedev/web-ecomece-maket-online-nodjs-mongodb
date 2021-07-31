@@ -1,0 +1,169 @@
+<%- include('../../dashboard/partials/header.ejs') -%> 
+<%- include('../../dashboard/partials/side-bar.ejs') -%>
+<section id="main-content">
+<section class="wrapper">
+<div class="row mt">
+    <div class="col-lg-12">
+        <h4><i class="fa fa-angle-right"></i> Advanced Form Validations</h4>
+        <div class="form-panel">
+            <div class="form">
+                <form class="cmxform form-horizontal style-form" id="signupForm" method="get" action="">
+                    <div class="form-group">
+                        <label for="firstname" class="control-label col-lg-2">Title</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="title" name="title" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="control-label col-lg-2">Content</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="content" name="content" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="control-label col-lg-2">percent</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="percent" name="percent" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group last">
+                        <label class="control-label col-md-3">Image Upload</label>
+                        <div class="col-md-9">
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="" />
+                                </div>
+                                <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                <div>
+                                    <span class="btn btn-theme02 btn-file">
+                                        <span class="fileupload-new"><i class="fa fa-paperclip"></i> Select image</span>
+                                        <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                        <input type="file" class="default" id="avatar"/>
+                                    </span>
+                                    <a href="advanced_form_components.html#" class="btn btn-theme04 fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
+                                </div>
+                            </div>
+                            <span class="label label-info">NOTE!</span>
+                            <span>
+                                Attached image thumbnail is supported in Latest Firefox, Chrome, Opera, Safari and Internet Explorer 10 only
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="agree" class="control-label col-lg-2 col-sm-3">status</label>
+                        <div class="col-lg-10 col-sm-9">
+                            <input type="checkbox" style="width: 20px;" class="checkbox form-control" id="status" name="status" />
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="username" class="control-label col-lg-2">Username</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="username" name="username" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label col-lg-2">Password</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="password" name="password" type="password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password" class="control-label col-lg-2">Confirm Password</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="confirm_password" name="confirm_password" type="password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label col-lg-2">Email</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" id="email" name="email" type="email" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="agree" class="control-label col-lg-2 col-sm-3">Agree to Our Policy</label>
+                        <div class="col-lg-10 col-sm-9">
+                            <input type="checkbox" style="width: 20px;" class="checkbox form-control" id="agree" name="agree" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newsletter" class="control-label col-lg-2 col-sm-3">Receive the Newsletter</label>
+                        <div class="col-lg-10 col-sm-9">
+                            <input type="checkbox" style="width: 20px;" class="checkbox form-control" id="newsletter" name="newsletter" />
+                        </div>
+                    </div> -->
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button class="btn btn-theme btnAddPromotion" type="submit">Save</button>
+                            <button class="btn btn-theme04" type="button">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /form-panel -->
+    </div>
+    <!-- /col-lg-12 -->
+</div>
+</section>
+</section>
+<%- include('../../dashboard/partials/footer.ejs') -%>
+<script>
+    $(document).on('click','.btnAddPromotion',function(e){
+        e.preventDefault();
+        let title = $('#title').val();
+        let content = $('#content').val();
+        let percent = $('#percent').val();
+        let _imagefile= $('#avatar')[0].files[0];
+        let status;
+        $('#status').each(function(){
+            var ischecked= $(this).is(":checked")
+            if(ischecked)
+            {
+                status=1;
+            }else{
+                status= 0;
+            }
+        });
+        let formData = new FormData();
+        if(_imagefile)
+        {
+            formData.append('avatar',_imagefile)
+        }
+        formData.append('title',title),
+        formData.append('content',content),
+        formData.append('percent',percent),
+        formData.append('status',status),
+        console.log({title,content,percent,_imagefile,status});
+        console.log(formData)
+
+        if(!Number(percent))
+        {
+            alert('Phần tram phải nhập là số. Mời nhập Lại')
+        }
+        if(percent < 0 || percent > 100)
+        {
+            alert('Khuyyến mãi phải lớn hơn 0 và nhỏ hơn 100')
+        }
+        if(!title||!content|| !percent ||! _imagefile)
+        {
+            alert('Mời bạn nhập đầy đủ thông tin.')
+        }else{
+            $.ajax({
+                url:'/promotions/add',
+                method:'POST',
+                enctype: 'multipart/form-data',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: resp =>{
+                    if(!resp){
+                        toastr["Success"]("Success","success")
+                    }else{
+                        toastr["Error"],("eroor",("khong thanh cong"))
+                    }                 
+                }
+            })
+        }
+
+    })
+</script>

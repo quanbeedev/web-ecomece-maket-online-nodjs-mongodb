@@ -1,0 +1,366 @@
+<%- include('../patials/header.ejs')%>
+
+<section class="banner-section" style="background-image: url(/assets/img/banner.png);">
+    <div class="container">
+        <div class="banner-inner text-center">
+            <h2 class="page-title">Product Details</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Shop Details</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="shop-details-page mt-120 rmt-70 mb-60 rmb-20">
+    <div class="container">
+        <div class="row col-gap-60">
+            <div class="col-xl-3 col-lg-4">
+                <div class="shop-sidebar">
+                    <div class="shop-widget b1">
+                        <div class="shop-widget-title">
+                            <h5><i class="flaticon-list"></i>Categories</h5>
+                        </div>
+                        <ul>
+                            <%if(listCategory.length){%>
+                                <%listCategory.forEach(item => {%>
+                                        <li><a href="/customers/danh-sach-san-pham?id=<%=item._id%>" _categoryId= "<%=item._id%>"  value="<%=item._id%>" class="filter-product-for-price-category"><i class="flaticon-apple "></i> <%=item.title%></a>
+                                        </li>
+                                    <%})%>
+                                <%}%>
+                        </ul>
+                    </div>
+                    <div class="shop-widget b1">
+                        <div class="shop-widget-title">
+                           <h5>Best Sale</h5>
+                        </div>
+                        <% let arr = []; %>
+                         <% if (listProduct && listProduct.length){ %> 
+                             <% for(let i = 0; i < listProduct.length -1; i++){ %> 
+                                     <% if(listProduct[i].promotion) { %> 
+                                         <% arr.push(listProduct[i])%>
+                                     <%}%> 
+                             <%}%> 
+                             <% if(arr.length < 4){%>
+                                <% for(let i = 0; i < arr.length -1; i++){%>
+                                   <% for(let j = i +1; j < arr.length; j++){%>
+                                       <%if(arr[i].promotion.percent < arr[j].promotion.percent){%>
+                                           <%let swap = arr[i];%>
+                                           <%arr[i] = arr[j];%>
+                                           <%arr[j] = swap;%>
+                                           <%}%>
+                                       <%}%>
+                               <div class="product list-product d-flex align-items-center bg-white br-5 mb-30">
+                                   <div class="product-img-wrap">
+                                      <img src="/img/<%=arr[i].avatar %>" alt="img">
+                                   </div>
+                                   <div class="product-content-wrap">
+                                      <div class="product-content">
+                                         <p><a href="/customers/chi-tiet-san-pham?productID=<%= arr[i]._id %>"><%= arr[i].title %> <br>(1kg)</a>
+                                         </p>
+                                      </div>
+                                      <div class="product-action">
+                                         <a href="#" class="add-to-btn small-btn">
+                                            <i class="flaticon-shopping-cart"></i>
+                                            <span>Add to Cart</span>
+                                            <h5 class="product-price"><%if(arr[i].promotion){%> 
+                                              <%=arr[i].price - arr[i].price *arr[i].promotion.percent / 100 %>
+                                          <%}else{%> 
+                                              <%=arr[i].price%>
+                                          <%}%> </h5>
+                                         </a>
+                                      </div>
+                                   </div>
+                                </div>
+                              <%}%>
+                              <%}else{%>
+                                <% for(let i = 0; i < 4; i++){%>
+                                   <% for(let j = i +1; j < 5; j++){%>
+                                       <%if(arr[i].promotion.percent < arr[j].promotion.percent){%>
+                                           <%let swap = arr[i];%>
+                                           <%arr[i] = arr[j];%>
+                                           <%arr[j] = swap;%>
+                                           <%}%>
+                                       <%}%>
+                               <div class="product list-product d-flex align-items-center bg-white br-5 mb-30">
+                                   <div class="product-img-wrap">
+                                      <img src="/img/<%=arr[i].avatar %>" alt="img">
+                                   </div>
+                                   <div class="product-content-wrap">
+                                      <div class="product-content">
+                                         <p><a href="/customers/chi-tiet-san-pham?productID=<%= arr[i]._id %>"><%= arr[i].title %> <br>(1kg)</a>
+                                         </p>
+                                      </div>
+                                      <div class="product-action">
+                                         <a href="#" class="add-to-btn small-btn">
+                                            <i class="flaticon-shopping-cart"></i>
+                                            <span>Add to Cart</span>
+                                            <h5 class="product-price"><%if(arr[i].promotion){%> 
+                                              <%=arr[i].price - arr[i].price *arr[i].promotion.percent / 100 %>
+                                          <%}else{%> 
+                                              <%=arr[i].price%>
+                                          <%}%> </h5>
+                                         </a>
+                                      </div>
+                                   </div>
+                                </div>
+                              <%}%>
+                              <%} %>
+                             
+                            <%}%>
+                     </div>
+                    <div class="shop-widget widget-product b1">
+                        <div class="special-offer-product bg-white p-25 br-5">
+                            <div class="off">10%<span>off</span></div>
+                            <div class="product-img-wrap">
+                                <img src="/assets/img/product/product3.png" alt="img" />
+                            </div>
+                            <div class="product-content">
+                                <div class="offer-product-price">
+                                    <span class="discounted-price">$120.00</span>
+                                    <span class="actual-price has-discount">$120.00</span>
+                                </div>
+                                <p>
+                                    <a href="shop-details.html">
+                                        Organic Granny Smith <br />
+                                        Apple (4ps)
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="product-action">
+                                <a href="#" class="add-to-btn">Add to Cart</a>
+                                <div class="add-wishlist text-center">
+                                    <i class="fa fa-heart-o"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-8">
+                <div class="product-details-wrap">
+                    <div class="row col-gap-60">
+                        <div class="col-xl-5">
+                            <div class="product-preview-wrap">
+                                <div class="tab-content bg-white p-50 b1 br-5">
+                                    <div class="tab-pane" id="preview1">
+                                        <img src="/img/<%=infoProduct.avatar %>" alt="Product Preview Image" data-magnify-src="/assets/img/product/product23.png" />
+                                    </div>
+                                    <div class="tab-pane active" id="preview2">
+                                        <img src="/img/<%=infoProduct.avatar %>" alt="Product Preview Image" data-magnify-src="/assets/img/product/product23.png" />
+                                    </div>
+                                    <div class="tab-pane" id="preview3">
+                                        <img src="/img/<%=infoProduct.avatar %>" alt="Product Preview Image" data-magnify-src="/assets/img/product/product23.png" />
+                                    </div>
+                                    <div class="tab-pane" id="preview4">
+                                        <img src="/img/<%=infoProduct.avatar %>" alt="Product Preview Image" data-magnify-src="/assets/img/product/product23.png" />
+                                    </div>
+                                </div>
+                                <ul class="nav nav-tabs mt-30">
+                                    <li>
+                                        <a data-toggle="tab" href="#preview1">
+                                            <img src="/img/<%=infoProduct.avatar %>" alt="Product Thumbnail Image" />
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="active" data-toggle="tab" href="#preview2">
+                                            <img src="/img/<%=infoProduct.avatar %>" alt="Product Thumbnail Image" />
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#preview3">
+                                            <img src="/img/<%=infoProduct.avatar %>" alt="Product Thumbnail Image" />
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#preview4">
+                                            <img src="/img/<%=infoProduct.avatar %>" alt="Product Thumbnail Image" />
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-7">
+                            <div class="product-details text-left bg-white px-50 py-45 b1 br-5">
+                                <h3 class="mb-25 rmt-25"><%= infoProduct.title %></h3>
+                                <div class="rating mb-25">
+                                    <div class="star mr-15">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="text">(13 Review)</div>
+                                </div>
+                                <p>
+                                    Sed egestas, ante et vulputate volutpat, eros pede semper evitluctus metus libero eu augue. Morbi s libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praest elemhendrerit tortor. Sed
+                                    semper lorem at felis. Vestibulum volutpat.
+                                </p>
+                                <p>lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu.</p>
+                                <h6 class="stock">Availability: 
+                                    <span>
+                                        <%if (infoProduct.amout > 0){%>
+                                            <%=infoProduct.amout%>
+                                        <%}else{%>
+                                            Hết hàng
+                                        <%}%>
+                                    </span>
+                                </h6>
+                                <h4 class="price">$<%if(infoProduct.promotion){%> 
+                                    <%=infoProduct.price - infoProduct.price *infoProduct.promotion.percent / 100 %>
+                                <%}else{%> 
+                                    <%=infoProduct.price%>
+                                <%}%></h4>
+                                <%if(infoProduct.promotion){%> 
+                                    <span class="actual-price has-discount">$<%= infoProduct.price  %></span>
+                                <%}else{%> 
+                                    Sản phẩm không có khuyến mãi
+                                <%}%>
+                                <div class="product-spinner mt-20">
+                                    <div class="number-input b1">
+                                        <button class="minus"></button>
+                                        <input min="1" name="quantity" value="1" type="number" />
+                                        <button class="plus"></button>
+                                    </div>
+                                    <a href="#" class="theme-btn br-30 ml-25">Add to Cart</a>
+                                    <div class="add-wishlist">
+                                        <i class="fa fa-heart-o"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  
+
+                    <div class="related-product mt-110 rmt-75">
+                        <h3 class="mb-35">Related Product</h3>
+                        <div class="row">
+                            
+                                    <div class="col-xl-4 col-md-6 col-md-4 mb-30">
+                                        <div class="product">
+                                            <div class="product-img-wrap">
+                                                <img src="/img/" alt="img" />
+        
+                                                <button class="quick-view" type="button" data-toggle="modal" data-target="#quick-view">Quick View</button>
+                                            </div>
+                                            <div class="product-content-wrap">
+                                                <div class="product-content">
+                                                    <p><a href="/customers/chi-tiet-san-pham?productID">(1 Bag 5 kg)</a></p>
+                                                </div>
+                                                <div class="product-action">
+                                                    <a href="#" class="add-to-btn small-btn">
+                                                        <i class="flaticon-shopping-cart"></i>
+                                                        <span>Add to Cart</span>
+                                                        <h5 class="product-price"></h5>
+                                                    </a>
+                                                    <div class="add-wishlist">
+                                                        <i class="fa fa-heart-o"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                             
+                            <div class="modal product-modal fade" id="quick-view" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body p-35 pt-0">
+                                            <div class="product-quick-view">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="product-preview-wrap">
+                                                                <div class="tab-content bg-white p-50 b1 br-5">
+                                                                    <div class="tab-pane" id="preview_1">
+                                                                        <img src="/assets/img/product/product23.png" alt="Product Preview Image" data-magnify-src="/assets/img/product/product23.png" />
+                                                                    </div>
+                                                                    <div class="tab-pane active" id="preview_2">
+                                                                        <img src="/assets/img/product/product23.png" alt="Product Preview Image" data-magnify-src="/assets/img/product/product23.png" />
+                                                                    </div>
+                                                                    <div class="tab-pane" id="preview_3">
+                                                                        <img src="/assets/img/product/product23.png" alt="Product Preview Image" data-magnify-src="/assets/img/product/product23.png" />
+                                                                    </div>
+                                                                    <div class="tab-pane" id="preview_4">
+                                                                        <img src="/assets/img/product/product23.png" alt="Product Preview Image" data-magnify-src="/assets/img/product/product23.png" />
+                                                                    </div>
+                                                                </div>
+                                                                <ul class="nav nav-tabs flex-nowrap align-content-between mt-30">
+                                                                    <li>
+                                                                        <a data-toggle="tab" href="#preview_1">
+                                                                            <img src="/assets/img/product/product23.png" alt="Product Thumbnail Image" />
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a class="active" data-toggle="tab" href="#preview_2">
+                                                                            <img src="/assets/img/product/product23.png" alt="Product Thumbnail Image" />
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a data-toggle="tab" href="#preview_3">
+                                                                            <img src="/assets/img/product/product23.png" alt="Product Thumbnail Image" />
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a data-toggle="tab" href="#preview_4">
+                                                                            <img src="/assets/img/product/product23.png" alt="Product Thumbnail Image" />
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="product-details text-left bg-white ml-25 px-50 py-45 b1 br-5">
+                                                                <h3 class="mb-25 rmt-25">Fresh Onion 1kg</h3>
+                                                                <div class="rating mb-25">
+                                                                    <div class="star mr-15">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                    </div>
+                                                                    <div class="text">(13 Review)</div>
+                                                                </div>
+                                                                <p>Sed egestas, ante et vulputate volutpat, eropede semper est, vitluctus metus libero eu augue. Morbi purus libero, faucibus adipiscing.</p>
+                                                                <p>commodo quis, gravida id, est. Sed lectus. Praest elemhendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat.lacus a ultrices.</p>
+                                                                <h6>Availability: <span>In Stock</span></h6>
+                                                                <h4 class="price">$120.00</h4>
+                                                                <div class="product-spinner mt-20">
+                                                                    <div class="number-input b1">
+                                                                        <button class="minus"></button>
+                                                                        <input min="1" name="quantity" value="2" type="number" />
+                                                                        <button class="plus"></button>
+                                                                    </div>
+                                                                    <a href="#" class="theme-btn br-30 ml-20">Add to Cart</a>
+                                                                    <div class="add-wishlist">
+                                                                        <i class="fa fa-heart-o"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<%- include('../patials/footer.ejs') -%>

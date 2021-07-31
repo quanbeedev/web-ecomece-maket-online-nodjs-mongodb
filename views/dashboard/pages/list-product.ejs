@@ -1,0 +1,83 @@
+<%- include('../../dashboard/partials/header.ejs') -%> 
+<%- include('../../dashboard/partials/side-bar.ejs') -%>
+
+<section id="main-content">
+    <section class="wrapper">
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            <table class="table table-striped table-advance table-hover">
+                <h4><i class="fa fa-angle-right"></i>Danh Sách Danh Mục</h4>
+                <hr />
+                <thead>
+                    <tr>
+               
+                        <th><i class="fa fa-bullhorn"></i> Title</th>
+                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> price</th>
+                        <th><i class="fa fa-bookmark"></i> amount</th>
+                        <th><i class="fa fa-edit"></i> category</th>
+                        <th><i class="fa fa-edit"></i> promotion</th>
+                        <th><i class="fa fa-edit"></i> avatar</th>
+                        <th><i class="fa fa-edit"></i> status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%if(listProduct && listProduct.length>0){%>
+                        <%listProduct.forEach(element=>{%>
+                    <tr>
+                                <a href="basic_table.html#"></a>
+                                <td class="hidden-phone"><%=element.title || ""%></td>
+                                <td class="hidden-phone"><%=element.price%></td>
+                                <td class="hidden-phone"><%=element.amount%></td>
+                                <td class="hidden-phone"> <%if(element.promotion){%> <%=element.promotion.title%> <%}%> </td>
+                                <td class="hidden-phone"><%= element.category.title || ''%></td>
+                                <td class="hidden-phone"><img src="/img/<%=element.avatar%>" width="100px" height="100px"></td>
+                                <td class="hidden-phone"><%=element.status%></td>                           
+                                <!-- <td>12000.00$</td> -->
+                                <!-- <td><span class="label label-info label-mini">Due</span></td> -->
+                                <td>
+                                    <!-- <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button> -->
+                                    <a href="/products/edit/<%=element._id%>">
+                                        <button class="btn btn-primary btn-xs" ><i class="fa fa-pencil">Edit</i></button>
+                                    </a>
+                                    <button _promotion="<%if(element.promotion){%><%=element.promotion._id%><%}%>"  
+                                    _category = "<%=element.category._id%>" _product = "<%=element._id%>" class="btn btn-danger btn-xs btnRemove"><i class="fa fa-trash-o">Remove</i></button>
+                                </td>
+                                
+                    </tr>   
+                      <%})%>
+                    <%}%>             
+                </tbody>
+            </table>
+        </div>
+        <!-- /content-panel -->
+    </div>
+    <!-- /col-md-12 -->
+</div>
+</section>
+</section>
+<%- include('../../dashboard/partials/footer.ejs') -%>
+
+<script>
+    $(document).on('click','.btnRemove',function(e){
+        e.preventDefault();
+        let id= $(this).attr('_product');
+        let category =$(this).attr('_category');
+        let promotion = $(this).attr('_promotion');
+        console.log({id,category,promotion});
+        $.ajax({
+            url:`products/remove/${id}`,
+            method:'POST',
+            data:{category,promotion},
+            sucess:resp =>{
+                if(!resp.error)
+                {
+                    toastr["Success"]("Remove success",("success"))
+                }else{
+                    toastr["Error"]("Remove"),("Error")
+                }
+            }
+
+        })
+    })
+</script>

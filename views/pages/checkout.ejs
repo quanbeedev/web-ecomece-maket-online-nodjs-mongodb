@@ -1,0 +1,265 @@
+<%- include('../patials/header.ejs') -%>
+<section class="banner-section" style="background-image: url(/assets/img/banner.png);">
+    <div class="container">
+        <div class="banner-inner text-center">
+            <h2 class="page-title">Checkout</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="checkout-page mt-120 rmt-80 mb-120 rmb-80">
+    <div class="container">
+        <div class="row col-gap-60">
+            <div class="col-xl-8 col-lg-6">
+                <div class="checkout-form-wrap rmb-50">
+                    <div class="cart-title">
+                        <h4>Billing Details</h4>
+                    </div>
+
+                    <form id="checkout-form" name="checkout-form" class="checkout-form" >
+                        <div class="row col-gap-50 clearfix">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="f-name">Họ và tên</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Jhon" required  value="<%= infoUser.name%>"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="l-name">Số điện thoại</label>
+                                    <input type="text" class="form-control" id="phone" placeholder="012345678"  value="<%infoUser.phone%>" required />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="l-name">Giới tính</label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sex" id="sex" value="1">
+                                        <label class="form-check-label" for="inlineRadio1">Nam</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sex" id="sex" value="0">
+                                        <label class="form-check-label" for="inlineRadio1">Nữ</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="l-name">Địa chỉ</label>
+                                    <input type="text" class="form-control" id="l-name" placeholder="1510 Lê Phước Sơn, quận 9 " required />
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="country">Country*</label>
+                                    <select class="form-control" id="country" name="select1">
+                                        <option value="value1">Select Country</option>
+                                        <option value="value2">United States</option>
+                                        <option value="value3">United Kingdom</option>
+                                        <option value="value4">Qatar</option>
+                                        <option value="value5">Russia</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="city">Town / City*</label>
+                                    <select class="form-control" id="city" name="select1">
+                                        <option value="value1">Select Option</option>
+                                        <option value="value2">Kushtia</option>
+                                        <option value="value3">Khulna</option>
+                                        <option value="value4">Dhaka</option>
+                                        <option value="value5">Borisal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="district">District*</label>
+                                    <select class="form-control" id="district" name="select1">
+                                        <option value="value1">Select District</option>
+                                        <option value="value2">Dhaka</option>
+                                        <option value="value3">Khulna</option>
+                                        <option value="value4">Barisal</option>
+                                        <option value="value5">Rsjshahi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="post-code">Postal Code*</label>
+                                    <input type="text" class="form-control" id="post-code" placeholder="Enter Post Code" required />
+                                </div>
+                            </div> -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email <span>(optional)</span></label>
+                                    <input type="email" class="form-control" id="email" placeholder="eg: yourmail@gmail.com"  value="<%=infoUser.email%>" required />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="street-address">Địa chỉ</label>
+                                    <input type="text" class="form-control" id="address" placeholder="0306 Nguyễn Hồng Quân, Quận 1, Thành Phố Hồ Chí Minh "  required />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="email">Other Note <span>(optional)</span></label>
+                                    <textarea class="form-control mb-0" id="note" placeholder="+01 000..." rows="8" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <div class="checkout-cart-total clearfix">
+                    <div class="cart-title">
+                        <h4>Order Summary</h4>
+                    </div>
+                    <%if(cartArr && cartArr.length > 0){%>
+                        <%cartArr.forEach( item => {%>
+                        <div class="total-item-wrap clearfix">
+                     
+                            <div class="total-item">
+                                <span class="title"><%=item.infoProduct.title%> (1kg)</span>
+                                <span class="quantity"><%=item.qty %></span>
+                                <span class="price" ><%=item.total%></span>
+                            </div>
+                       <%})%>
+                       <%}%>
+                            <!-- <div class="total-item">
+                                <span class="title">Shipping Cost</span>
+                                <span class="price">10</span>
+                            </div>
+                            <div class="total-item discount">
+                                <span class="title">Discount</span>
+                                <span class="price">0</span>
+                            </div> -->
+                            <% let ite = 0%>
+                            <%if(cartArr){%>
+                                <%cartArr.forEach(item => {%>
+                                   <% ite += item.total%>
+                                <%})%>
+                            <%}%>
+                            <div class="total-item total">
+                                <span class="title">Total</span>
+                                <span class="price" id="totalPrice" _priceTotal="<%=ite%>"><%=ite%></span>
+                            </div>
+                        </div>
+                    
+                    <div class="cart-title">
+                        <h4 class="mb-25 mt-10">Payment</h4>
+                    </div>
+                    <ul id="accordionExample" class="mb-40">
+                        <li class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" value="1" id="methodone" name="defaultExampleRadios" checked />
+                            <label class="custom-control-label" for="methodone" data-toggle="collapse" data-target="#collapseOne" aria-controls="collapseOne">Chuyển khoản qua ngân hàng</label>
+                            <div id="collapseOne" class="collapse show" value="2" data-parent="#accordionExample" style="">
+                                <p>STK: đố em biết anh đang nghĩ gì</p>
+                            </div>
+                        </li>
+
+                        <!-- <li class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="methodtwo" name="defaultExampleRadios" />
+                            <label class="custom-control-label collapsed" for="methodtwo" data-toggle="collapse" data-target="#collapseTwo" aria-controls="collapseTwo">Credit Card / Master Card</label>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordionExample" style="">
+                                <ul>
+                                    <li>
+                                        <a href="#"><img src="assets/img/pay-method/visa.png" alt="" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><img src="assets/img/pay-method/mastercard.png" alt="" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><img src="assets/img/pay-method/discover.png" alt="" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><img src="assets/img/pay-method/americanexpress.png" alt="" /></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li> -->
+
+                        <li class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="methodthree" name="defaultExampleRadios" />
+                            <label class="custom-control-label collapsed" for="methodthree" data-toggle="collapse" data-target="#collapsethree" aria-controls="collapsethree">Thanh toán sau khi nhận hàng</label>
+                            <div id="collapsethree" class="collapse" data-parent="#accordionExample" style="">
+                                <p>Bạn không được phép mở hàng trước khi thanh toán</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="checkout-btn text-center">
+                        <button class="theme-btn br-5 w-100 btnCheckOut  " userID = "<%if(infoUser){%><%=infoUser._id%><%}%>">Thanh Toán</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- include('../patials/footer.ejs') -%>
+<script>
+    $(document).on('click','.btnCheckOut',function(e){
+        let id= $(this).attr('userID')
+        console.log({id})
+     let name = $('#name').val()
+     let phone = $('#phone').val()
+     let email = $('#email').val()
+     let address = $('#address').val()
+     let note = $('#note').val()
+     let sex
+     let pay
+     let methodone = document.getElementById("methodone");
+        let methodthree = document.getElementById("methodthree");
+        let total = $('#totalPrice').attr('_priceTotal');
+        let checkbox = document.getElementsByName("sex");
+
+
+
+        for (var i = 0; i < checkbox.length; i++){
+            if (checkbox[i].checked === true){
+                sex = checkbox[i].value;
+            }
+        }
+        if(methodone.checked === true){
+            pay = "Thanh toán bằng chuyển khoản"
+        }else if(methodthree.checked === true){
+            pay = "Thanh toán sau khi vận chuyển"
+        }
+        console.log({name, phone, email, address, sex ,note, total, pay});
+        if(!address || !phone|| !name|| !email){
+            toastr["warning"]("Mời bạn nhập đầy đủ thông tin", "Cảnh Báo");
+        }else{
+            $.ajax({
+            url:'/customers/checkout',
+            method: 'POST',
+            data:{
+                id,name, phone, email, address, sex ,note, total, pay
+            },
+            success: resp =>{
+                if(!resp.error){
+                    toastr.success("Bạn đã thanh toán, mời bạn chờ nhận hàng", "Thành Công");
+                    setTimeout( () =>{
+                        window.location.href = '/customers'
+                    },1000)
+                }else{
+                    toastr.error("Bạn không thể thanh toán, Mời bạn thêm lại", "Thất Bại");
+                }
+                
+            }
+        })
+        }
+
+    
+        
+
+    })
+
+ </script>

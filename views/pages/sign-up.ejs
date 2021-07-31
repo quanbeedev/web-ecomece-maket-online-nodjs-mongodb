@@ -1,0 +1,101 @@
+<%- include('../patials/header.ejs')%>
+<section class="banner-section" style="background-image: url(/assets/img/banner.png);">
+    <div class="container">
+        <div class="banner-inner text-center">
+            <h2 class="page-title">Sign Up</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Sign Up</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="login-area my-120 rmy-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 pr-0 rpr-15 rmb-80">
+                <div class="login-information bg-white br-5 py-125">
+                    <div class="login-info-inner">
+                        <h2>Sign Up</h2>
+                        <form class="login-form" >
+                            <div class="text-field">
+                                <label for="name">Full Name*</label>
+                                <input type="text" id="name" placeholder="Jhon Mack" />
+                            </div>
+                            <div class="email-field">
+                                <label for="username">Enter Username*</label>
+                                <input type="text" id="username" placeholder="User Name" />
+                            </div>
+                            <div class="password-field">
+                                <label for="password">Password*</label>
+                                <input type="password" id="password" placeholder="*********" />
+                            </div>
+                            <div class="email-field">
+                                <label for="email">Email*</label>
+                                <input type="email" id="email" placeholder="Your Email For Notify" required>
+                            </div>
+                            <!-- <div class="phone-field">
+                                <label for="phone">Phone*</label>
+                                <input type="number" id="Phone" placeholder="123456789" />
+                            </div> -->
+                            <div class="alternative-login">Do You Have Account ?<a class="signup-link" href="/customers/dang-nhap">Login</a></div>
+                            <div class="signin-button-wrap">
+                                <button type="submit" class="btn-bg2 btnSignUp"> Sign Up</button>
+                            </div>
+                        </form>
+                        <!-- <div class="or-text">or you can join with</div> -->
+                        <!-- <div class="share-btn-wrap">
+                            <div class="facebook-btn">
+                                <a href="#"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+                            </div>
+                            <div class="google-btn">
+                                <a href="#"><i class="fa fa-google"></i><span>Google</span></a>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 px-0 rpl-15 login-image-wrap">
+                <div class="login_img">
+                    <img src="/assets/img/sign-up.png" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- include('../patials/footer.ejs') %>
+<%- include('../scripts/signIn_signUp.ejs') %>
+<!-- <script>
+    $(document).on('click' ,'.btnSignUp', function(e) {
+        let name = $('#name').val();
+        let username =$('#username').val();
+        let password =$('#password').val();
+        let email = $('#email').val();
+        console.log({name, username, password,email})
+
+        if(!username || !password)
+        {
+            //toastr["Warning"],("Mời Bạn Nhập Đầy Đủ Thông Tin Username Hoặc Password","Cảnh báo ")
+            alert("Mời bạn nhập thông tin đầy đủ")
+        }else{
+            $.ajax({
+                url: '/customers/dang-ky',
+                method: 'POST',
+                data:{ name, username,password,email},
+                success: resp =>{
+                    if(!resp.error){
+                    alert("Chúc mừng bạn đã đăng ký thành công")
+                    window.location.href =`/customers/dang-nhap`
+                    }else{
+                        alert("Đăng ký thất bại mời bạn đăng ký lại")
+                    }
+
+                }
+            })
+        }
+
+    })
+</script> -->
